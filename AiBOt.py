@@ -2,13 +2,18 @@ import streamlit as st
 from groq import Groq
 
 st.set_page_config("PragyanAI Content Generator", layout="wide")
-st.title("📢 PragyanAI – Content Generator")
+st.title("Swayam – Content Generator")
 
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 col1, col2 = st.columns(2)
 
 with col1:
+    # 📸 Upload your photo
+    photo = st.file_uploader("Upload your photo", type=["jpg", "png", "jpeg"])
+    if photo:
+        st.image(photo, caption="Your Photo", use_container_width=True)
+
     product = st.text_input("Product")
     audience = st.text_input("Audience")
 
@@ -22,7 +27,11 @@ with col1:
 
 with col2:
     if "text" in st.session_state:
-        content = st.text_area("Generated Content", st.session_state.text, height=300)
+        content = st.text_area(
+            "Generated Content",
+            st.session_state.text,
+            height=300
+        )
 
         st.download_button(
             label="⬇️ Download as TXT",
